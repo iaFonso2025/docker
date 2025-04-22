@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./01-Front
+    ports:
+      - "8085:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./02-Back
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/clientes
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    volumes:
+      - mongo_data:/data/db
+      - ./03-DataBase/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo_data:

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Clientes</title>
+    <script>
+        async function cargarClientes() {
+            const respuesta = await fetch("http://localhost:3000/clientes");
+            const clientes = await respuesta.json();
+            const lista = document.getElementById("lista");
+            clientes.forEach(c => {
+                const item = document.createElement("li");
+                item.textContent = `${c.nombre} (${c.email})`;
+                lista.appendChild(item);
+            });
+        }
+        window.onload = cargarClientes;
+    </script>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <ul id="lista"></ul>
+</body>
+</html>
